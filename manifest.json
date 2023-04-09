@@ -1,0 +1,22 @@
+{
+    "name": "Já Dei Comida?",
+    "short_name": "JDC",
+    "theme_color": "#2196f3",
+    "background_color": "#2196f3",
+    "display": "standalone",
+    "orientation": "portrait",
+    "start_url": "/",
+    "prefer_related_applications": true,
+    "icons": [
+        {
+            "src": "img/icon-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "img/icon-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}

@@ -9,5 +9,8 @@ Router.get('/', (req, res) => {
 .post('/food', Controller.setTodaysFood)
 .get('/food', Controller.getTodaysFood)
 .delete('/food', Controller.delete)
+.get('/manifest', Controller.manifest)
+.get('/img/:imgPath', Controller.imageFinder)
+.get('/serviceWorker', Controller.sw)
 
 module.exports = Router;

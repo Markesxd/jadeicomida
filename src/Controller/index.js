@@ -1,4 +1,5 @@
 const db = require('../Database/connection');
+const path = require('path');
 
 module.exports = {
     createDb: async (req, res) => {
@@ -47,5 +48,17 @@ module.exports = {
         console.log(sql);
         const [result] = await db.execute(sql);
         res.json(result);
+    }, 
+
+    manifest: async (req, res) => {
+        res.sendFile(path.join(__dirname, '/../../manifest.json'));
+    }, 
+
+    imageFinder: async (req, res) => {
+        res.sendFile(path.join(__dirname, '/../Resources', req.params.imgPath));
+    },
+
+    sw: async (req, res) => {
+        res.sendFile(path.join(__dirname, '/../Services/serviceWorker.js'));
     }
 }

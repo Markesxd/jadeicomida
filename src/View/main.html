@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest" />
     <title>Já dei comida?</title>
 </head>
 <style>
@@ -76,5 +77,14 @@
             document.querySelector('#noite').checked = body.noite; 
 
     });
+
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+            navigator.serviceWorker
+                .register("serviceWorker")
+                .then(res => console.log("service worker registered"))
+                .catch(err => console.log("service worker not registered", err))
+        })
+    }
 </script>
 </html>
