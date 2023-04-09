@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Já dei comida?</title>
+</head>
+<style>
+    .title {
+        text-align: center;
+    }
+
+    .checkList {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 5rem;
+        margin-top: 5rem;
+    }
+
+    .larger {
+        width: 3rem;
+        height: 3rem;
+        margin-right: 1rem;
+        margin-left: 2rem;
+    }
+
+    .botaoNav {
+        display: flex;
+        justify-content: center;
+        margin-top: 5rem;
+    }
+    
+    .botao {
+        font-size: 4rem;
+    }
+</style>
+<body>
+    <h1 class="title">Já dei comida?</h1>
+    <div class="checkList">
+        <span >
+            <input class="larger" type="checkbox" id="manha"><label for="manha">Manhã</label>
+        </span>
+        <span>
+            <input class="larger" type="checkbox" id="tarde"><label for="tarde">Tarde</label>
+        </span>
+        <span>
+            <input class="larger" type="checkbox" id="noite"><label for="noite">Noite</label>
+        </span>
+    </div>
+    <nav class="botaoNav">
+        <button class="botao" onclick="update()">Atualizar</button>
+    </nav>
+</body>
+<script>
+    function update() {
+        fetch('/food', { 
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json' 
+            },
+            body: JSON.stringify({
+                manha: document.querySelector('#manha').checked,
+                tarde: document.querySelector('#tarde').checked,
+                noite: document.querySelector('#noite').checked
+            })
+        });
+    }
+
+    fetch('/food').then(
+        async (response) => {
+            const body = await response.json();
+            document.querySelector('#manha').checked = body.manha; 
+            document.querySelector('#tarde').checked = body.tarde; 
+            document.querySelector('#noite').checked = body.noite; 
+
+    });
+</script>
+</html>
