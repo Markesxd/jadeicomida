@@ -36,42 +36,94 @@
     .botao {
         font-size: 3.5rem;
     }
+
+    .loadingWrapper {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .message {
+        font-size: 3.5;
+        text-align: center;
+    }
 </style>
 <body>
-    <h1 class="title">Já dei comida?</h1>
-    <div class="checkList">
-        <span >
-            <input class="larger" type="checkbox" id="manha"><label for="manha">Manhã</label>
-        </span>
-        <span>
-            <input class="larger" type="checkbox" id="tarde"><label for="tarde">Tarde</label>
-        </span>
-        <span>
-            <input class="larger" type="checkbox" id="noite"><label for="noite">Noite</label>
-        </span>
-    </div>
-    <nav class="botaoNav">
-        <button class="botao" onclick="update()">Atualizar</button>
-    </nav>
+    <section id="root">
+        <div class="loadingWrapper">
+            <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#000">
+                <g fill="none" fill-rule="evenodd">
+                    <g transform="translate(1 1)" stroke-width="2">
+                        <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+                        <path d="M36 18c0-9.94-8.06-18-18-18">
+                            <animateTransform
+                                attributeName="transform"
+                                type="rotate"
+                                from="0 18 18"
+                                to="360 18 18"
+                                dur="1s"
+                                repeatCount="indefinite"/>
+                        </path>
+                    </g>
+                </g>
+            </svg>
+        </div>
+    </section>
 </body>
 <script>
-    function update() {
-        fetch('/food', { 
-            method: 'POST',
-            headers: {
-                "Content-Type": 'application/json' 
-            },
-            body: JSON.stringify({
-                manha: document.querySelector('#manha').checked,
-                tarde: document.querySelector('#tarde').checked,
-                noite: document.querySelector('#noite').checked
-            })
-        });
+    async function update() {
+        try {
+            await fetch('/food', { 
+                method: 'POST',
+                headers: {
+                    "Content-Type": 'application/json' 
+                },
+                body: JSON.stringify({
+                    manha: document.querySelector('#manha').checked,
+                    tarde: document.querySelector('#tarde').checked,
+                    noite: document.querySelector('#noite').checked
+                })
+            });
+            loadMessage('Atualizado com sucesso!');
+        } catch (e) {
+            console.error(e);
+            loadMessage('Opa! Algo de errado aconteceu. Tente novamente mais tarde.');
+        }
+    }
+
+    function loadMessage(message) {
+        document.querySelector('#root')
+        .innerHTML = `
+        <h1 class="title">Já dei comida?</h1>
+        <p class="message">${message}</p>            
+        `;
+    }
+
+    function loadPage() {
+        const root = document.querySelector('#root');
+        root.innerHTML = `<h1 class="title">Já dei comida?</h1>
+        <div class="checkList">
+            <span >
+                <input class="larger" type="checkbox" id="manha"><label for="manha">Manhã</label>
+            </span>
+            <span>
+                <input class="larger" type="checkbox" id="tarde"><label for="tarde">Tarde</label>
+            </span>
+            <span>
+                <input class="larger" type="checkbox" id="noite"><label for="noite">Noite</label>
+            </span>
+        </div>
+        <nav class="botaoNav">
+            <button class="botao" onclick="update()">Atualizar</button>
+        </nav>`;
     }
 
     fetch('/food').then(
         async (response) => {
             const body = await response.json();
+            loadPage();
             document.querySelector('#manha').checked = body.manha; 
             document.querySelector('#tarde').checked = body.tarde; 
             document.querySelector('#noite').checked = body.noite; 
