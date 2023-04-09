@@ -73,25 +73,24 @@
     </section>
 </body>
 <script>
-    async function update() {
-        try {
+    function update() {
+        loadPage();
+        fetch('/food', { 
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json' 
+            },
+            body: JSON.stringify({
+                manha: document.querySelector('#manha').checked,
+                tarde: document.querySelector('#tarde').checked,
+                noite: document.querySelector('#noite').checked
+            })
+        }).then( () => {
             loadMessage('Atualizado com sucesso!');
-            await fetch('/food', { 
-                method: 'POST',
-                headers: {
-                    "Content-Type": 'application/json' 
-                },
-                body: JSON.stringify({
-                    manha: document.querySelector('#manha').checked,
-                    tarde: document.querySelector('#tarde').checked,
-                    noite: document.querySelector('#noite').checked
-                })
-            });
-            loadMessage('Atualizado com sucesso!');
-        } catch (e) {
+        }).catch((e) => {
             console.error(e);
             loadMessage('Opa! Algo de errado aconteceu. Tente novamente mais tarde.');
-        }
+        })
     }
 
     function loadPage() {
