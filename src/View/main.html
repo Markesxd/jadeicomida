@@ -74,16 +74,19 @@
 </body>
 <script>
     function update() {
-        loadPage();
+        const manha = document.querySelector('#manha').checked;
+        const tarde = document.querySelector('#tarde').checked;
+        const noite = document.querySelector('#noite').checked;
+        loading();
         fetch('/food', { 
             method: 'POST',
             headers: {
                 "Content-Type": 'application/json' 
             },
             body: JSON.stringify({
-                manha: document.querySelector('#manha').checked,
-                tarde: document.querySelector('#tarde').checked,
-                noite: document.querySelector('#noite').checked
+                manha,
+                tarde,
+                noite
             })
         }).then( () => {
             loadMessage('Atualizado com sucesso!');
@@ -93,7 +96,7 @@
         })
     }
 
-    function loadPage() {
+    function loading() {
         document.querySelector('#root')
         .innerHTML = `
         <div class="loadingWrapper">
