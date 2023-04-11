@@ -19,7 +19,9 @@ module.exports = {
     }, 
 
     setTodaysFood: async(req, res) => {
-        const [today] = (new Date()).toISOString().split('T');
+        const date = new Date();
+        date.setTime(date.getTime() - 10800000);
+        const [today] = date.toISOString().split('T'); 
         let sql = `SELECT * FROM food WHERE data='${today}'`;
         const [result] = await db.execute(sql);
         const {manha, tarde, noite} = req.body;
