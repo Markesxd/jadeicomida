@@ -36,11 +36,13 @@ module.exports = {
     }, 
 
     getTodaysFood: async (req, res) => {
-        const [today] = (new Date()).toISOString().split('T');
+        const date = new Date();
+        date.setTime(date.getTime() - 10800000);
+        const [today] = date.toISOString().split('T'); 
         const sql = `SELECT * FROM food WHERE data='${today}'`;
         console.log(sql);
         const [[result]] = await db.execute(sql);
-        res.json(result);
+        res.json(result ?? []);
     },
 
     delete: async (req, res) => {

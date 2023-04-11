@@ -149,11 +149,16 @@
 
     fetch('/food').then(
         async (response) => {
-            const body = await response.json();
-            loadPage();
-            document.querySelector('#manha').checked = body.manha; 
-            document.querySelector('#tarde').checked = body.tarde; 
-            document.querySelector('#noite').checked = body.noite; 
+            try {
+                const body = await response.json();
+                loadPage();
+                document.querySelector('#manha').checked = body.manha; 
+                document.querySelector('#tarde').checked = body.tarde; 
+                document.querySelector('#noite').checked = body.noite; 
+            } catch(e) {
+                console.error(e);
+                loadMessage('Algum erro aconteceu, Tente novamente mais tarde.');
+            }
 
     });
 
