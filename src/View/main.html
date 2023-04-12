@@ -76,6 +76,7 @@
     function update() {
         const manha = document.querySelector('#manha').checked;
         const tarde = document.querySelector('#tarde').checked;
+        const pate = document.querySelector('#pate').checked;
         const noite = document.querySelector('#noite').checked;
         loading();
         fetch('/food', { 
@@ -86,6 +87,7 @@
             body: JSON.stringify({
                 manha,
                 tarde,
+                pate,
                 noite
             })
         }).then( () => {
@@ -139,6 +141,9 @@
                 <input class="larger" type="checkbox" id="tarde"><label for="tarde">Tarde</label>
             </span>
             <span>
+                <input class="larger" type="checkbox" id="pate"><label for="pate">Patê</label>
+            </span>
+            <span>
                 <input class="larger" type="checkbox" id="noite"><label for="noite">Noite</label>
             </span>
         </div>
@@ -154,6 +159,7 @@
                 loadPage();
                 document.querySelector('#manha').checked = body.manha; 
                 document.querySelector('#tarde').checked = body.tarde; 
+                document.querySelector('#pate').checked = body.pate; 
                 document.querySelector('#noite').checked = body.noite; 
             } catch(e) {
                 console.error(e);

@@ -8,12 +8,12 @@ module.exports = {
         const [today] = date.toISOString().split('T'); 
         let sql = `SELECT * FROM food WHERE data='${today}'`;
         const [result] = await db.execute(sql);
-        const {manha, tarde, noite} = req.body;
-        const values = [manha, tarde, noite];
+        const {manha, tarde, pate, noite} = req.body;
+        const values = [manha, tarde, pate, noite];
         if(result.length === 0) {
-            sql = `INSERT INTO food (manha, tarde, noite, data) VALUES (?, ?, ?, '${today}')`;
+            sql = `INSERT INTO food (manha, tarde, pate, noite, data) VALUES (?, ?, ?, ?, '${today}')`;
         } else {
-            sql = `UPDATE food SET manha=?, tarde=?, noite=?`;
+            sql = `UPDATE food SET manha=?, tarde=?, pate=?, noite=?`;
         }
         console.log(req.body);
         console.log(sql, values);
