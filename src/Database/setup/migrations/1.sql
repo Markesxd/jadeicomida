@@ -1,0 +1,2 @@
+ALTER TABLE food
+ADD pate TINYINT 
